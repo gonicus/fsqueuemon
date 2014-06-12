@@ -2,7 +2,7 @@
 
 Web status monitor for FreeSWITCH's mod_callcenter queues and agents
 
-![Screenshot](/gonicus/fsqueuemon/raw/master/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/gonicus/fsqueuemon/master/screenshot.png)
 
 ## Description
 
