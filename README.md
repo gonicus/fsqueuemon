@@ -23,3 +23,7 @@ Please adapt these three settings to your environment:
 * `URI` in `queuemon.py` to access `mod_xml_rpc`
 * `hide_agents` can contain agents that should never be shown
 
+## ToDo
+
+The few strings in the UI are German right now and not yet i18nalized. 
+
