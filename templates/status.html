@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="content"></div>
+{% if not request.args.showlinks or request.args.showlinks != '0' %}
+<hr>
+<footer>
+<div class="row-fluid">
+	<div class="span6">
+{% include "settings.html" %}
+	</div>
+	<div class="span6" style="text-align:right;">
+		<p>&copy; GONICUS 2012</p>
+	</div>
+</div>
+</footer>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<script>
+	var updateContent = function() {
+
+		$('#content').load('{{ url_for(content_view, **content_parameters)|safe }}',function(response, status, xhr) {
+			if (status == "error") {
+				var msg = "Seite konnte nicht geladen werden.";
+				$("#content").html('<div class="row-fluid"><div class="span4">&nbsp;</div><div class="span4"><div class="alert alert-error">' + msg + '</div></div></div>');
+			}
+		});
+
+		{% if request.args.refresh and request.args.refresh|int > 0 %}
+		setTimeout(updateContent, {{ request.args.refresh|int }} * 1000);
+		{% endif %}
+	}
+
+	$(function() {
+		$("#settingsform").hide();
+		$("#showsettings").click(function() { $("#settingsform").fadeToggle("fast"); });
+		updateContent();
+	});
+</script>
+
+{% endblock %}

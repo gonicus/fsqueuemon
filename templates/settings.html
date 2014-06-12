@@ -1,0 +1,38 @@
+<p>
+	<button id="showsettings" class="btn btn-small"><i class="icon-cog"></i> Einstellungen</button>
+</p>
+<form id="settingsform" method="POST" action="{{ url_for('settings') }}" class="well form-horizontal">
+	<input type="hidden" name="view" value="{{ request.script_root }}{{ request.path }}">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="input_refresh">automatisch neu laden</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" name="refresh" value="{% if request.args.refresh and request.args.refresh|int > 0 %}{{ request.args.refresh|int }}{% endif %}" id="input_refresh" class="span3"><span class="add-on">Sekunden</span>
+				</div>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="checkbox_showoffline">abgemeldete Agenten</label>
+			<div class="controls">
+				<label class="checkbox"><input type="checkbox" name="showoffline" id="checkbox_showoffline" value="1"{% if not request.args.showoffline or request.args.showoffline != '0' %} checked{% endif %}> anzeigen</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="checkbox_showlinks">Links</label>
+			<div class="controls">
+				<label class="checkbox"><input type="checkbox" name="showlinks" id="checkbox_showlinks" value="1"{% if not request.args.showlinks or request.args.showlinks != '0' %} checked{% endif %}> anzeigen</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="checkbox_showclock">Uhrzeit</label>
+			<div class="controls">
+				<label class="checkbox"><input type="checkbox" name="showclock" id="checkbox_showclock" value="1"{% if request.args.showclock and request.args.showclock != '0' %} checked{% endif %}> anzeigen</label>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">übernehmen</button>
+		</div>
+	</fieldset>
+</form>
+

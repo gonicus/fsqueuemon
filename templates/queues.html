@@ -1,0 +1,50 @@
+{% set member_state_text = {'Unknown': 'unbekannt', 'Waiting': 'wartet', 'Trying': 'klingelt', 'Answered': 'spricht', 'Abandoned': 'abgesprungen' } %}
+{% set member_state_label = {'Unknown': '', 'Waiting': 'label-warning', 'Trying': 'label-important', 'Answered': 'label-success', 'Abandoned': '' } %}
+
+<h3>Queues</h3>
+{% for name, queue in queues.items()|sort %}
+<div class="row-fluid">
+	<div class="span12">
+		<h4>{{ queue.name.split('@')[0]|capitalize }}
+			<small>wartend</small>
+			<span class="badge{% if queue.waiting_count %} badge-important{% endif %}">{{ queue.waiting_count }}</span>
+		</h4>
+	</div>
+</div>
+
+<table class="table table-striped table-condensed">
+	<thead>
+		<tr>
+			<th width="10%">Position</th>
+			<th width="15%">Status</th>
+			<th width="30%">Name</th>
+			<th width="30%">Caller ID</th>
+			<th width="15%">seit</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for member in queue.members %}
+		<tr{% if member.state != 'Waiting' %}class="muted"{% endif %}>
+			<td>{{ loop.index }}.</td>
+			<td><span class="label {{ member_state_label[member.state] }}">{{ member_state_text[member.state] }}</span></td>
+			<td>{{ member.cid_name }}</td>
+			<td>{{ member.cid_number }}</td>
+			<td>
+				{% if member.state == 'Abandoned' %}
+				{{ member.abandoned_epoch|deltaformat }}
+				{% elif member.state == 'Answered' %}
+				{{ member.bridge_epoch|deltaformat }}
+				{% else %}
+				{{ member.system_epoch|deltaformat }}
+				{% endif %}
+			</td>
+		</tr>
+		{% else %}
+		<tr>
+			<td colspan="5">-</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endfor %}

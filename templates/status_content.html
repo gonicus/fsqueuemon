@@ -1,0 +1,16 @@
+{% if clock %}
+<div class="row-fluid">
+	<div class="span12">
+		<h1 style="text-align:right">{{ clock }}</h1>
+	</div>
+</div>
+{% endif %}
+<div class="row-fluid">
+	<div class="span6">
+{% include 'agents.html' %}
+	</div>
+	<div class="span6">
+{% include 'queues.html' %}
+	</div>
+</div>
+
